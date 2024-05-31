@@ -6,6 +6,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import PokemonList from '../screens/PokemonList';
 import HomeScreen from '../screens/HomeScreen';
 import PokemonAxios from '../screens/PokemonAxios';
+import ApiPerros from '../screens/ApiPerros';
 
 // Navegador Bottom Tabs Navigator
 const Tab = createBottomTabNavigator();
@@ -53,6 +54,21 @@ export default function BottomTab() {
         tabBarActiveTintColor: '#3b4cca',
         headerStyle: {
           backgroundColor: '#3b4cca',
+        },
+        headerTintColor: '#fff',
+        tabBarIcon: ({ color }) => (
+          <Ionicons name="list" color={color} size={24} />
+        ),
+      }}
+    />
+    <Tab.Screen
+      name="apiPerros"
+      component={ApiPerros}
+      options={{
+        title: 'Perros',
+        tabBarActiveTintColor: '#bd9a82',
+        headerStyle: {
+          backgroundColor: '#bd9a82',
         },
         headerTintColor: '#fff',
         tabBarIcon: ({ color }) => (

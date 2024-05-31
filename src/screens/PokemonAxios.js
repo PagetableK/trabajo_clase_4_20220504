@@ -8,10 +8,9 @@ const numColumns = 3;
 
 export default function PokemonAxios() {
   const [pokemon, setPokemon] = useState([]);
-  const [habilidades, setHabilidad] = useState([]);
   const [nPokemon, setNPokemon]=useState(0); //La api comenzará mostrando solamente 25 pokemones
   const [loading, setLoading] = useState(false);
-
+ 
   useEffect(() => {
     getPokemon(nPokemon);
   }, [nPokemon]);
@@ -21,21 +20,20 @@ export default function PokemonAxios() {
       setLoading(true);
       const response = await axios.get(`https://pokeapi.co/api/v2/pokemon?limit=${nPokemon}`);
       const dataPokemon = response.data;
-      const HABILIDADES = [];
+
       for(let i = 0; i < dataPokemon.results.length; i++){
         const response1 = await axios.get(dataPokemon.results[i].url);
-        HABILIDADES.push(response1.data.abilities[0].ability.name);
+        dataPokemon.results[i].habilidad = response1.data.abilities[0].ability.name;
       }
 
       setPokemon(dataPokemon.results);
-      setHabilidad(HABILIDADES);
       setLoading(false);
     } catch (error) {
       console.log("Hubo un error listando los pokemones", error);
       setLoading(false);
     }
   }
-
+  
   const renderItem = ({ item }) => {
     return (
       <View style={styles.card}>
@@ -45,7 +43,7 @@ export default function PokemonAxios() {
           source={{ uri: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${item.url.split('/')[6]}.png` }}
         />
         <Text style={styles.title}>{item.name}</Text>
-        <Text>Habilidad: {habilidades[item.url.split('/')[6]]}</Text>
+        <Text>Habilidad: {item.habilidad}</Text>
       </View>
     );
   };
